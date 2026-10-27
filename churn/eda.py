@@ -1,8 +1,16 @@
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
 import ssl
+
+import pandas as pd
+import sns
+from matplotlib import pyplot as plt
+
+from churn.data import (
+    load_and_prepare_data,
+    create_advanced_features,
+    prepare_features_for_model,
+    COLUMN_NAMES_RU,
+    VALUE_MAPS
+)
 
 ssl._create_default_https_context = ssl._create_unverified_context
 
