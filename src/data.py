@@ -1,11 +1,24 @@
+from pathlib import Path
+
 import pandas as pd
 
 from src.constants import COLUMN_NAMES_RU, DATA_URL, SERVICE_COLS, VALUE_MAPS
 
+DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "telco_churn.csv"
 
-def load_and_prepare_data() -> pd.DataFrame:
+
+def load_raw_data(path: Path = DATA_PATH) -> pd.DataFrame:
+    """Читает CSV из локальной папки data/. Если файла нет, скачивает его один раз и сохраняет."""
+    if not path.exists():
+        print(f"Скачивание данных в {path}...")
+        path.parent.mkdir(parents=True, exist_ok=True)
+        pd.read_csv(DATA_URL).to_csv(path, index=False)
+    return pd.read_csv(path)
+
+
+def load_and_prepare_data(path: Path = DATA_PATH) -> pd.DataFrame:
     print("1. Загрузка и базовая подготовка данных...")
-    df = pd.read_csv(DATA_URL)
+    df = load_raw_data(path)
     df.drop("customerID", axis=1, inplace=True)
 
     df["TotalCharges"] = pd.to_numeric(df["TotalCharges"], errors="coerce")
