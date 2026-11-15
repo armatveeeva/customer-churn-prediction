@@ -20,6 +20,8 @@ dependencies = [
 ]
 
 [tool.poetry]
+name = "customer-churn-prediction"
+version = "0.1.0"
 packages = [{include = "src"}]
 
 [tool.poetry.group.dev.dependencies]
